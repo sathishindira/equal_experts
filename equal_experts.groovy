@@ -14,16 +14,11 @@ pipeline {
         }
         stage('push the images to the aws ecr') {
             steps {
-                scripts{
-                    """
-                    #bin/bash
-                    
-                    docker tag equal-experts:latest 520186517569.dkr.ecr.us-east-1.amazonaws.com/equal-experts:latest
+                sh "docker tag equal-experts:latest 520186517569.dkr.ecr.us-east-1.amazonaws.com/equal-experts:latest"
 
-                    docker push 520186517569.dkr.ecr.us-east-1.amazonaws.com/equal-experts:latest
-                    """
+                sh "docker push 520186517569.dkr.ecr.us-east-1.amazonaws.com/equal-experts:latest"
             }
         }
-        }
+        
     }
 }
