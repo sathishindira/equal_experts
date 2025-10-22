@@ -4,17 +4,15 @@ pipeline {
     stages {
         stage("login aws ecr"){
             steps {
-
-            sh " aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 520186517569.dkr.ecr.us-east-1.amazonaws.com"
+                sh "aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 520186517569.dkr.ecr.us-east-1.amazonaws.com"
         }
         }
         stage('build docker image') {
-
             steps {
                 sh " docker build -t equal-experts:latest ."
             }
-            
-        stage('push the images to the aws ecr')
+        }
+        stage('push the images to the aws ecr') {
             steps {
                 scripts{
                     """
