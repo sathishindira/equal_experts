@@ -6,17 +6,17 @@ from fastapi.testclient import TestClient
 from app import app
 
 @pytest.fixture
-def client():
+def test_client():
     """
     initiate client
     """
     return TestClient(app)
 
-def test_octocat_gists(client):
+def test_octocat_gists(test_client):
     """
         collecting the octocat gists and verifing the responses
     """
-    response = client.get('/octocat')
+    response = test_client.get('/octocat')
     assert response.status_code == 200
     data = response.json()
     assert isinstance(data, list)
@@ -26,30 +26,30 @@ def test_octocat_gists(client):
     assert 'url' in data[0]
     assert 'files' in data[0]
 
-def test_nonexistent_user(client):
+def test_nonexistent_user(test_client):
     """
     Verifing the responses for the non existent user
     """
-    response = client.get('/thisuserdoesnotexist123456789')
+    response = test_client.get('/thisuserdoesnotexist123456789')
     assert response.status_code == 404
     data = response.json()
     assert 'detail' in data
 
-def test_root(client):
+def test_root(test_client):
     """
     verifing the response for the root api call
     """
-    response = client.get('/')
+    response = test_client.get('/')
     assert response.status_code == 200
     data = response.json()
     assert 'message' in data
     assert 'usage' in data
 
-def test_health(client):
+def test_health(test_client):
     """
     Verifing the status api call
     """
-    response = client.get('/health')
+    response = test_client.get('/health')
     assert response.status_code == 200
     data = response.json()
     assert data['status'] == 'healthy'
