@@ -24,3 +24,18 @@ jobs:
         pylint $(git ls-files '*.py')
     - name: Test the app.py file with test cases
       run: pytest test_app.py
+    -   name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ vars.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+    -   name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+    -   name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+    -   name: Build and push
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: true
+          tags: gists-api/app:latest
