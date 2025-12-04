@@ -1,3 +1,4 @@
+# pylint: disable=redefined-outer-name
 """
 Testing gists api calls for non-existent-user, octocat and root api calls
 """
