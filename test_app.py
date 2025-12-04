@@ -1,12 +1,21 @@
+"""
+Testing gists api calls for non-existenet-user,octocat and root api calls
+"""
 import pytest
 from fastapi.testclient import TestClient
 from app import app
 
 @pytest.fixture
 def client():
+    """
+    initiate client
+    """
     return TestClient(app)
 
 def test_octocat_gists(client):
+    """
+        collecting the octocat gists and verifing the responses
+    """
     response = client.get('/octocat')
     assert response.status_code == 200
     data = response.json()
@@ -18,12 +27,18 @@ def test_octocat_gists(client):
     assert 'files' in data[0]
 
 def test_nonexistent_user(client):
+    """
+    Verifing the responses for the non existent user
+    """
     response = client.get('/thisuserdoesnotexist123456789')
     assert response.status_code == 404
     data = response.json()
     assert 'detail' in data
 
 def test_root(client):
+    """
+    verifing the response for the root api call
+    """
     response = client.get('/')
     assert response.status_code == 200
     data = response.json()
@@ -31,6 +46,9 @@ def test_root(client):
     assert 'usage' in data
 
 def test_health(client):
+    """
+    Verifing the status api call
+    """
     response = client.get('/health')
     assert response.status_code == 200
     data = response.json()
