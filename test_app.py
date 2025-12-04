@@ -11,8 +11,10 @@ def client():
     initiate client
     """
     return TestClient(app)
+    
+cli_1 = client
 
-def test_octocat_gists(client):
+def test_octocat_gists(cli_1):
     """
         collecting the octocat gists and verifing the responses
     """
@@ -26,7 +28,7 @@ def test_octocat_gists(client):
     assert 'url' in data[0]
     assert 'files' in data[0]
 
-def test_nonexistent_user(client):
+def test_nonexistent_user(cli_1):
     """
     Verifing the responses for the non existent user
     """
@@ -35,7 +37,7 @@ def test_nonexistent_user(client):
     data = response.json()
     assert 'detail' in data
 
-def test_root(client):
+def test_root(cli_1):
     """
     verifing the response for the root api call
     """
@@ -45,7 +47,7 @@ def test_root(client):
     assert 'message' in data
     assert 'usage' in data
 
-def test_health(client):
+def test_health(cli_1):
     """
     Verifing the status api call
     """
@@ -53,3 +55,4 @@ def test_health(client):
     assert response.status_code == 200
     data = response.json()
     assert data['status'] == 'healthy'
+
