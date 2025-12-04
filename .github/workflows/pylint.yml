@@ -25,6 +25,10 @@ jobs:
     - name: Analysing the code with pylint
       run: |
         pylint $(git ls-files '*.py')
+    - name: SonarQube Scan
+      uses: SonarSource/sonarqube-scan-action@v6.0.0
+      env:
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
     - name: Test the app.py file with test cases
       run: pytest test_app.py
     -   name: Login to Docker Hub
