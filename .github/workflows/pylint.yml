@@ -29,6 +29,11 @@ jobs:
       uses: SonarSource/sonarqube-scan-action@v6.0.0
       env:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      with:
+          args: >
+            -Dsonar.organization=sathishindira
+            -Dsonar.projectKey=sathishindira
+            -Dsonar.sources=.
     - name: Test the app.py file with test cases
       run: pytest test_app.py
     -   name: Login to Docker Hub
