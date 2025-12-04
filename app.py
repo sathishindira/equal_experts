@@ -8,24 +8,24 @@ import uvicorn
 app = FastAPI()
 
 @app.get('/')
-"""
-Gists api root module for the welecome message
-"""
 def root():
+    """
+    Gists api root module for the welecome message
+    """
     return {'message': 'Welcome to GitHub Gists API', 'usage': 'GET /{username}'}
 
 @app.get('/health')
-"""
-Gists api health status monitoring
-"""
 def health():
+    """
+    Gists api health status monitoring
+    """
     return {'status': 'healthy'}
 
 @app.get('/{username}')
-"""
-Gists api collection for the provided username
-"""
 def get_gists(username: str):
+    """
+    Gists api collection for the provided username
+    """
     response = requests.get(f'https://api.github.com/users/{username}/gists',timeout=5)
 
     if response.status_code == 404:
@@ -44,4 +44,3 @@ def get_gists(username: str):
 
 if __name__ == '__main__':
     uvicorn.run(app, host='0.0.0.0', port=8080)
-
