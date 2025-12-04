@@ -2,6 +2,8 @@ pipeline {
     agent any
 
     stages {
+        stage("application")
+        when(branch)
         stage("login aws ecr"){
             steps {
                 sh "aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 520186517569.dkr.ecr.us-east-1.amazonaws.com"
